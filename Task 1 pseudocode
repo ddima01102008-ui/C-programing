@@ -1,0 +1,14 @@
+Task 1:
+
+symbols = [ '*', '=', '+' ];
+
+
+for i from 0 to N-1 do
+{              
+    for j from 0 to N-1 do
+    {    
+        index = (i + j) MOD 3;  
+        place symbols[index] AT position (i, j);
+    }
+    move to next row;
+}
