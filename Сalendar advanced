@@ -1,0 +1,158 @@
+#include <stdio.h>
+
+int main() 
+{
+    int days;
+    int month;
+    int year;
+    int K;
+    int J;
+    int h;
+    int m;
+    int i;
+    int day;
+    int col;
+    
+
+    printf("What month?\n");
+    printf("What year?");
+
+    scanf("%d %d", &month, &year);
+
+    if (month == 1){
+        days = 31;
+    }
+    else if (month == 2){
+        if (year % 400 == 0){
+        days = 29;
+        }
+        else if (year % 100 == 0){
+        days = 28;
+         }
+        else if (year % 4== 0){
+        days = 29;
+         }
+         else {
+         days = 28;
+         } 
+    }
+    else if (month == 3){
+        days =31;
+    }
+    else if (month == 4){
+        days =30;
+    }
+    
+    else if (month == 5){
+        days =31;
+    }
+    else  if (month == 6){
+        days =30;
+    }
+    else if (month == 7){
+        days =31;
+    }
+    else if (month == 8){
+        days =31;
+    }
+    else if (month == 9){
+        days =30;
+    }
+    else if (month == 10){
+        days =31;
+    }
+    else if (month == 11){
+        days =30;
+    }
+    else if (month == 12){
+        days =31;
+    }
+    else {
+        printf("error");
+        return 0;
+    }
+    
+    
+    if (month == 1 || month == 2){
+        m = month + 12;
+        year = year - 1 ;
+    }
+    else {
+        m = month;
+    }
+
+    K = year % 100;
+    J = year / 100;
+    h = (1 + (13 * (m+1)/5) + K + K/4 + J/4 - 2 * J) % 7;
+
+    if (h < 0) 
+    { 
+        h = h + 7; 
+    }
+    
+    
+
+    if (month == 1){
+        printf("January\n");
+    }
+    
+    if (month == 2){
+        printf("February\n");
+    }
+    
+    if (month == 3){
+        printf("March\n");
+    }
+    
+    if (month == 4){
+        printf("April\n");
+    }
+    
+    if (month == 5){
+        printf("May\n");
+    }
+    
+    if (month == 6){
+        printf("June\n");
+    }
+    
+    if (month == 7){
+        printf("July\n");
+    }
+    
+    if (month == 8){
+        printf("August\n");
+    }
+    
+    if (month == 9){
+        printf("September\n");
+    }
+    
+    if (month == 10){
+        printf("October\n");
+    }
+    
+    if (month == 11){
+        printf("November\n");
+    }
+    
+    if (month == 12){
+        printf("December\n");
+    }
+    
+    printf("  M  T  W  T  F  S  S\n");
+    
+    for (i = 0; i < (h + 5) % 7; i = i + 1) {
+    printf("   ");
+    }
+    col = (h + 5) % 7;
+    for (day = 1; day <= days; day = day + 1) {
+    printf("%3d", day);
+    col = col + 1;
+    if (col == 7){
+        printf("\n");
+        col = 0;
+    }
+    }
+    return 0;
+}
