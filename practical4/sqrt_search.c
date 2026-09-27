@@ -10,14 +10,14 @@ typedef struct {
     int found;
 } Result;
 
-/* Exhaustive enumeration (Lecture 4, slide 8):
-   step through 0, step, 2*step, ... until ans^2 is close to x or ans > x. */
+/* Exhaustive enumeration (Lecture 4, slide 8).
+   Instead of exit(1) on failure it returns found = 0, so all inputs can be compared. */
 Result sqrt_exhaustive(double x)
 {
     double step = EPSILON * EPSILON;
     Result r = {0.0, 0, 0};
 
-    while (fabs(r.ans * r.ans - x) >= EPSILON && r.ans <= x) {
+    while (fabs(r.ans * r.ans - x) >= EPSILON && r.ans * r.ans <= x) {
         r.ans += step;
         r.guesses++;
     }
@@ -54,7 +54,7 @@ static double now_sec(void)
 
 int main(void)
 {
-    double inputs[] = {0.25, 2, 25, 1000, 2500, 12345, 123456};
+    double inputs[] = {0.25, 2, 25, 1000, 2500, 12345, 1e6, 1e8, 1e10};
     int n = sizeof(inputs) / sizeof(inputs[0]);
     const int BISECT_REPEATS = 100000;   /* bisection is too fast to time once */
 

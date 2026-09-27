@@ -23,7 +23,8 @@ gcc -std=c11 -Wall -Wextra -o sqrt_search sqrt_search.c -lm
 
 Conclusions:
 
-* Exhaustive search makes ~sqrt(x) / 0.0001 guesses (linear in sqrt(x)); bisection makes ~log2(x / epsilon) guesses (≤ 30 here).
-* Bisection is ~10³–10⁴ times faster already for small x, and the gap grows with x.
-* **Worst inputs for exhaustive search are large x where it fails**: near sqrt(x) one step changes ans² by 2·ans·0.0001, which exceeds epsilon once ans > 50 (x > 2500). Then it can jump over the answer and keeps going until ans > x — x / 0.0001 guesses. For x = 123456: 1.2·10⁹ guesses, ~3.5 s and still no answer, while bisection gives 351.3631 in 30 guesses (~0.2 µs) — ~10⁷ times faster.
-* Exhaustive search also fails for 0 < x < 1 (e.g. 0.25): it stops at ans > x, but sqrt(x) > x there. Bisection handles it with `high = max(1, x)`.
+* Exhaustive search makes ~sqrt(x) / epsilon² guesses — O(sqrt(x)); bisection makes ~log2(x / epsilon) guesses — O(log x), at most 55 here.
+* For x = 1000 both give the answer from the lecture (31.6227), but exhaustive needs 316 227 guesses vs 19.
+* The gap grows with x: ~10⁴ times at x = 1000, ~10⁵ at x = 10⁶, ~10⁶–10⁷ at x = 10⁸…10¹⁰.
+* **Inputs where exhaustive search is much slower: large x (10⁶ and more).** For x = 10¹⁰ it runs 10⁹ iterations (~3 s) and still fails, bisection needs 55 iterations (~0.5 µs).
+* Why exhaustive fails for large x: near sqrt(x) one step changes ans² by 2·ans·epsilon² > epsilon once ans > 50, so it can jump over the answer. The lecture code then calls exit(1); here the function returns found = 0 instead, so every input can be timed.
